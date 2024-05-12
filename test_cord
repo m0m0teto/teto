@@ -1,0 +1,32 @@
+#import sys
+#sys.setrecursionlimit(10000)
+import numpy as np
+nm = input()
+NM = [int(x) for x in nm.split()]
+vat_num = NM[(1,2)[0]]
+train_matrix = []
+for N in range(vat_num):
+    train = input()
+    Train = [int(x) for x in train.split()]
+    train_matrix.append(Train)
+
+win = [row[0] for row in train_matrix]
+lose = [row[1] for row in train_matrix]
+win_count = np.ones([vat_num,1])
+
+for N in range(vat_num):
+    for M in range(vat_num):
+        if win[N] == lose[M]:
+            win_count[M] += 1
+        if win[N] == win[M] and N < M:
+            win_count[M] += 1
+
+max_value = max(max(row) for row in win_count)
+max_positions = [(i, j) for i, row in enumerate(win_count) for j, value in enumerate(row) if value == max_value]
+count = np.count_nonzero(win_count == max_value)
+
+winner = [win[max_positions[i][0]] for i in range(count)]
+winner_matrix = np.sort(winner, axis=None)
+
+for num in winner_matrix:
+    print(num, end="\n")
