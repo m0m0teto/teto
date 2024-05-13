@@ -1,0 +1,35 @@
+# coding: utf-8
+# 自分の得意な言語で
+# Let's チャレンジ！！
+import numpy as np
+nm = input()
+NM = [int(x) for x in nm.split()]
+#路線の数N, 駅の数M
+N = NM[0]
+M = NM[1]
+
+#1番目の駅からの運賃
+station_matrix = [list(map(int, input().split())) for _ in range(N)]
+#print(station_matrix)
+
+#経由すべき駅の数
+X = int(input())
+#print(X)
+#路線と駅
+route_matrix = [list(map(int, input().split())) for _ in range(X)]
+#print(route_matrix)
+
+money = 0
+
+for n in range(X):
+    if money == 0:
+        money += station_matrix[route_matrix[n][0]-1][route_matrix[n][1]-1]
+#        print(money)
+    elif route_matrix[n][1] >= route_matrix[n-1][1]:
+        money += station_matrix[route_matrix[n][0]-1][route_matrix[n][1]-1]-station_matrix[route_matrix[n][0]-1][route_matrix[n-1][1]-1]
+#        print(money)
+    elif route_matrix[n][1] < route_matrix[n-1][1]:
+        money += station_matrix[route_matrix[n][0]-1][route_matrix[n-1][1]-1]-station_matrix[route_matrix[n][0]-1][route_matrix[n][1]-1]
+#        print(money)
+    
+print(money)
